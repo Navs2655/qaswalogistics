@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qaswa Logistics - Our Services</title>
+  <link rel="stylesheet" href="styles/index.css">
+  <style>
+    /* Services Page Specific Styles */
+    .service-detail {
+      padding: 80px 0;
+      background-color: #f9f9f9;
+    }
+
+    .service-hero {
+      position: relative;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      background-color: var(--dark);
+      overflow: hidden;
+    }
+
+    .service-hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .service-hero-background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-hero-content {
+      position: relative;
+      color: white;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .service-hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .service-hero-content p {
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: slideUp 1s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .service-item {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-item.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .service-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .service-item:hover .service-image img {
+      transform: scale(1.1);
+    }
+
+    .service-content {
+      padding: 25px;
+    }
+
+    .service-content h3 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .service-content h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .service-item:hover .service-content h3::after {
+      width: 100px;
+    }
+
+    .service-content p {
+      margin-bottom: 20px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .service-content .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      color: white;
+      background-color: var(--primary);
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .service-content .btn:hover {
+      background-color: var(--accent);
+    }
+
+    .service-features {
+      padding: 80px 0;
+      background-color: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .feature-item {
+      text-align: center;
+      padding: 30px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .feature-item.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background-color: rgba(var(--primary-rgb), 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary);
+      transition: background-color 0.3s ease;
+    }
+
+    .feature-item:hover .feature-icon {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .feature-item h4 {
+      margin-top: 0;
+      color: var(--dark);
+      margin-bottom: 15px;
+    }
+
+    .feature-item p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .service-pricing {
+      padding: 80px 0;
+      background-color: #f5f5f5;
+    }
+
+    .pricing-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+
+    .pricing-intro h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .pricing-intro p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .service-cta {
+      background-color: var(--primary);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .service-cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .service-cta p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .cta-buttons .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+    }
+
+    .cta-buttons .btn-accent {
+      background-color: var(--accent);
+    }
+
+    .cta-buttons .btn-accent:hover {
+      background-color: white;
+      color: var(--accent);
+    }
+
+    .btn-white {
+      background-color: white;
+      color: var(--primary);
+    }
+
+    .btn-white:hover {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .service-grid, .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+      <div class="logo-container">
+          <img src="img/logo.png" alt="QASWA Logistics Logo" class="logo">
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+      <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </div>
+  </header>
+
+  <!-- Service Hero Section -->
+  <section class="service-hero">
+    <div class="service-hero-background">
+      <img src="img/img12.jpg" alt="Moving Services">
+    </div>
+    <div class="container">
+      <div class="service-hero-content">
+        <h1>Our Comprehensive Services</h1>
+        <p>Qaswa Logistics offers a wide range of professional moving and logistics services tailored to meet your specific needs. From residential moves to commercial relocations, we've got you covered.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Detail Section -->
+  <section class="service-detail">
+    <div class="container">
+      <h2 class="section-title">Explore Our Services</h2>
+      <p class="section-description">At Qaswa Logistics, we understand that every move is unique. That's why we offer a variety of services to ensure your relocation experience is seamless and stress-free.</p>
+      
+      <div class="service-grid">
+        <div class="service-item" data-delay="0">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="Man & Van Services">
+          </div>
+          <div class="service-content">
+            <h3>Man & Van Services</h3>
+            <p>Our man and van service is perfect for small-scale moves and deliveries. With flexible scheduling and competitive pricing, we're the ideal choice for when you need to move quickly and efficiently.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="200">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="House Removals">
+          </div>
+          <div class="service-content">
+            <h3>House Removals</h3>
+            <p>Moving to a new home? Our comprehensive house removal service takes care of everything from packing to transportation and unpacking, ensuring a smooth transition to your new property.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="400">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="Office Relocations">
+          </div>
+          <div class="service-content">
+            <h3>Office Relocations</h3>
+            <p>Minimize downtime and ensure a smooth transition with our specialized office relocation services. We handle everything from IT equipment to furniture with care and precision.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="600">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="Office Removals">
+          </div>
+          <div class="service-content">
+            <h3>Office Removals</h3>
+            <p>Our office removal service is designed to streamline the process of moving your business. We work efficiently to minimize disruption to your operations.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="800">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="Same-Day Delivery">
+          </div>
+          <div class="service-content">
+            <h3>Same-Day Delivery</h3>
+            <p>When you need items delivered urgently, our same-day delivery service provides rapid, reliable transportation for time-sensitive packages and goods.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="1000">
+          <div class="service-image">
+            <img src="/api/placeholder/400/300" alt="Packing & Unpacking">
+          </div>
+          <div class="service-content">
+            <h3>Packing & Unpacking</h3>
+            <p>Our professional packing service ensures your belongings are safely wrapped and protected during transit. We can also help with unpacking at your destination.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="service-features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Our Services</h2>
+      <p class="section-description">We pride ourselves on delivering exceptional service with a focus on professionalism, reliability, and customer satisfaction.</p>
+      
+      <div class="features-grid">
+        <div class="feature-item" data-delay="0">
+          <div class="feature-icon">
+            <span>⭐</span>
+          </div>
+          <h4>Expert Team</h4>
+          <p>Our team consists of experienced professionals who are trained to handle your belongings with care and efficiency.</p>
+        </div>
+        
+        <div class="feature-item" data-delay="200">
+          <div class="feature-icon">
+            <span>🛡️</span>
+          </div>
+          <h4>Fully Insured</h4>
+          <p>All our services are fully insured, providing you with peace of mind throughout the moving process.</p>
+        </div>
+        
+        <div class="feature-item" data-delay="400">
+          <div class="feature-icon">
+            <span>🕒</span>
+          </div>
+          <h4>Punctual Service</h4>
+          <p>We value your time and always strive to provide on-time service that fits your schedule.</p>
+        </div>
+        
+        <div class="feature-item" data-delay="600">
+          <div class="feature-icon">
+            <span>💰</span>
+          </div>
+          <h4>Competitive Pricing</h4>
+          <p>We offer transparent, competitive pricing without compromising on the quality of our services.</p>
+        </div>
+        
+        <div class="feature-item" data-delay="800">
+          <div class="feature-icon">
+            <span>🚚</span>
+          </div>
+          <h4>Modern Fleet</h4>
+          <p>Our fleet of vehicles is well-maintained and equipped with the latest tools to ensure safe transportation.</p>
+        </div>
+        
+        <div class="feature-item" data-delay="1000">
+          <div class="feature-icon">
+            <span>🤝</span>
+          </div>
+          <h4>Customer Satisfaction</h4>
+          <p>We're committed to your satisfaction and go the extra mile to ensure a positive experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Pricing Section -->
+  <section class="service-pricing">
+    <div class="container">
+      <div class="pricing-intro">
+        <h2>Transparent & Affordable Pricing</h2>
+        <p>At Qaswa Logistics, we believe in providing transparent pricing without hidden fees. Our rates are competitive and tailored to your specific requirements.</p>
+      </div>
+      
+      <div class="service-grid">
+        <div class="service-item" data-delay="0">
+          <div class="service-content">
+            <h3>Man & Van Service</h3>
+            <p>Starting from £50 per hour</p>
+            <ul class="benefits-list">
+              <li><span class="benefit-icon">✓</span> Single item transportation</li>
+              <li><span class="benefit-icon">✓</span> Small flat/house moves</li>
+              <li><span class="benefit-icon">✓</span> IKEA/furniture store pickups</li>
+              <li><span class="benefit-icon">✓</span> Student moves</li>
+            </ul>
+            <a href="#" class="btn">Get Quote</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="200">
+          <div class="service-content">
+            <h3>House Removals</h3>
+            <p>Starting from £300</p>
+            <ul class="benefits-list">
+              <li><span class="benefit-icon">✓</span> Full house relocation</li>
+              <li><span class="benefit-icon">✓</span> Packing services available</li>
+              <li><span class="benefit-icon">✓</span> Disassembly/reassembly of furniture</li>
+              <li><span class="benefit-icon">✓</span> Loading/unloading assistance</li>
+            </ul>
+            <a href="#" class="btn">Get Quote</a>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="400">
+          <div class="service-content">
+            <h3>Office Relocations</h3>
+            <p>Starting from £500</p>
+            <ul class="benefits-list">
+              <li><span class="benefit-icon">✓</span> Minimal business interruption</li>
+              <li><span class="benefit-icon">✓</span> Specialized equipment handling</li>
+              <li><span class="benefit-icon">✓</span> Weekend/after-hours service</li>
+              <li><span class="benefit-icon">✓</span> IT equipment relocation</li>
+            </ul>
+            <a href="#" class="btn">Get Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service CTA Section -->
+  <section class="service-cta">
+    <div class="container">
+      <h2>Ready to Experience Stress-Free Moving?</h2>
+      <p>Contact us today to discuss your requirements and get a personalized quote for your next move.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-white">Request a Quote</a>
+        <a href="#" class="btn btn-accent">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="service-detail">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="service-grid">
+        <div class="service-item" data-delay="0">
+          <div class="service-content">
+            <h3>What areas do you cover?</h3>
+            <p>We provide our services across the UK, with a focus on major cities including London, Manchester, Birmingham, and Edinburgh. We also offer international moving services to selected European countries.</p>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="200">
+          <div class="service-content">
+            <h3>How far in advance should I book?</h3>
+            <p>We recommend booking at least 2-3 weeks in advance, especially for larger moves or during peak seasons. However, we also offer last-minute and same-day services subject to availability.</p>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="400">
+          <div class="service-content">
+            <h3>Are you insured?</h3>
+            <p>Yes, all our services are fully insured. We have comprehensive coverage for goods in transit and public liability insurance to ensure your peace of mind throughout the moving process.</p>
+          </div>
+        </div>
+        
+        <div class="service-item" data-delay="600">
+          <div class="service-content">
+            <h3>What payment methods do you accept?</h3>
+            <p>We accept various payment methods including credit/debit cards, bank transfers, and cash. A deposit may be required at the time of booking, with the balance payable upon completion of the service.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" style="background-color: var(--dark); color: white; padding: 40px 0;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+        <div>
+          <h3>Qaswa Logistics</h3>
+          <p>Professional packers and movers dedicated to providing exceptional relocation services across the UK and internationally.</p>
+        </div>
+        <div>
+          <h3>Contact Us</h3>
+          <p>1234 Moving Street<br>London, UK<br>Phone: 020 1234 5678<br>Email: info@qaswalogistics.com</p>
+        </div>
+        <div>
+          <h3>Business Hours</h3>
+          <p>Monday - Friday: 8am - 6pm<br>Saturday: 9am - 4pm<br>Sunday: Closed</p>
+        </div>
+      </div>
+      <div style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+        <p>&copy; 2025 Qaswa Logistics. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu functionality
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+
+      hamburger.addEventListener('click', function() {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+      });
+
+      // Close mobile menu when clicking a nav link
+      document.querySelectorAll('.nav-menu a').forEach(link => {
+          link.addEventListener('click', () => {
+              hamburger.classList.remove('active');
+              navMenu.classList.remove('active');
+          });
+      });
+
+      // Animate service items on scroll
+      const serviceItems = document.querySelectorAll('.service-item');
+      const featureItems = document.querySelectorAll('.feature-item');
+      
+      // Function to check if element is in viewport
+      function isInViewport(element, offset = 100) {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.top <= (window.innerHeight || document.documentElement.clientHeight) - offset
+        );
+      }
+      
+      // Function to animate elements
+      function animateElements() {
+        serviceItems.forEach(item => {
+          if (isInViewport(item) && !item.classList.contains('animated')) {
+            setTimeout(() => {
+              item.classList.add('animated');
+            }, parseInt(item.dataset.delay) || 0);
+          }
+        });
+        
+        featureItems.forEach(item => {
+          if (isInViewport(item) && !item.classList.contains('animated')) {
+            setTimeout(() => {
+              item.classList.add('animated');
+            }, parseInt(item.dataset.delay) || 0);
+          }
+        });
+      }
+      
+      // Initial check
+      setTimeout(animateElements, 200);
+      
+      // Check on scroll
+      window.addEventListener('scroll', animateElements);
+      
+      // Add hover effects
+      serviceItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          const heading = this.querySelector('h3');
+          if (heading) {
+            heading.classList.add('animate-pulse');
+          }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          const heading = this.querySelector('h3');
+          if (heading) {
+            heading.classList.remove('animate-pulse');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
